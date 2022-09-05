@@ -10,7 +10,7 @@ class ExtendRequestResolver implements ArgumentValueResolverInterface
 {
     public function supports(Request $request, ArgumentMetadata $argument): bool
     {
-        return Request::class === $argument->getType() || is_subclass_of($argument->getType(), Request::class);
+        return is_subclass_of($argument->getType(), Request::class);
     }
 
     public function resolve(Request $baseRequest, ArgumentMetadata $argument): iterable
