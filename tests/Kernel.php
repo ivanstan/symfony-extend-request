@@ -4,8 +4,6 @@ namespace Ivanstan\SymfonyExtendRequest\Tests;
 
 use Ivanstan\SymfonyExtendRequest\SymfonyExtendRequestBundle;
 use Ivanstan\SymfonyExtendRequest\Tests\Request\ExtendedRequest;
-use Ivanstan\SymfonyExtendRequest\Tests\Service\FooService;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
