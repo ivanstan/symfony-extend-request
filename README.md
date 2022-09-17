@@ -6,31 +6,32 @@ extends `Symfony\Component\HttpFoundation\Request` and implement custom logic in
 ## Example
 
 ```php
-namespace App\Request;
+use App\Request\ExtendedRequest;
 
-use Symfony\Component\HttpFoundation\Request;
+class ProductsController extends AbstractController {
 
-class ExtendedRequest extends Request
-{
-    public function foo(): string
+    #[Route('product/search')]
+    public function search(SearchProductsRequest $request): JsonResponse
     {
-        return $this->get('foo');
+        return new JsonResponse([
+            'name' => $request->getName(),
+        ]);
     }
+    
 }
 ```
 
 ```php
-use App\Request\ExtendedRequest;
+namespace App\Request;
 
-class ExampleController extends AbstractController {
+use Symfony\Component\HttpFoundation\Request;
 
-    public function someMethod(ExtendedRequest $request): JsonResponse
+class SearchProductsRequest extends Request
+{
+    public function getName(): string
     {
-        return new JsonResponse([
-            'foo' => $request->foo(),
-        ]);
+        return $this->get('name');
     }
-    
 }
 ```
 
@@ -47,6 +48,37 @@ return [
 ];
 ```
 
+## Requests as services
+Classes extending `Symfony\Component\HttpFoundation\Request` can now be promoted to fully functional
+Symfony services, with all of its dependency injection features. Since request constructor is dedicated for
+query params, headers, etc. `Required` attribute is encouraged to inject other services in extended request class, for example:
+
+```php
+<?php
+
+namespace App\Request;
+
+use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Service\Attribute\Required;
+
+class ExtendedRequest extends Request
+{
+    protected LoggerInterface $logger;
+
+    #[Required]
+    public function setLogger(LoggerInterface $logger):void
+    {
+        $this->logger = $logger;
+    }
+}
+
+```
+
+This will de-facto work if autowiring is enabled.
+
+## Testing
+Run: `composer test`
+
 ## Next development steps
-- Add ability to inject services to extended request class using `#[Required]` attribute.
 - Support request validation in child classes.

@@ -1,4 +1,13 @@
 services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  Ivanstan\SymfonyExtendRequest\:
+    resource: '../src/'
+    exclude:
+      - '../src/DependencyInjection/'
+
   Ivanstan\SymfonyExtendRequest\Resolver\ExtendRequestResolver:
     tags:
       - { name: controller.argument_value_resolver, priority: 100 }

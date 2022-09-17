@@ -42,7 +42,12 @@ class Kernel extends BaseKernel
 
     protected function configureRoutes(RoutingConfigurator $routes): void
     {
-        $routes->add('test-get-custom', '/test/get/custom')->controller([TestController::class, 'testGetCustomRequestParam']);
-        $routes->add('test-get-symfony', '/test/get/symfony')->controller([TestController::class, 'testGetSymfonyRequestParam']);
+        $routes
+            ->add('test-get-custom', '/test/get/custom')
+            ->controller([TestController::class, 'testGetCustomRequestParam']);
+
+        $routes
+            ->add('test-get-symfony', '/test/get/symfony')
+            ->controller([TestController::class, 'testGetSymfonyRequestParam']);
     }
 }
